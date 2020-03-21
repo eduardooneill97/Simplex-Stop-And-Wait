@@ -10,30 +10,23 @@ public class Main {
 		c1.start();
 		c2.start();
 		
-		try {
-			TimeUnit.SECONDS.sleep(2);
-			c2.receive(new ReceiveCallback() {
-				
-				@Override
-				public void onReceive(Frame frame) {
-					// TODO Auto-generated method stub
-					System.out.println(new String(frame.getData()));
-				}
-			});
+		c2.receive(new ReceiveCallback() {
 			
+			@Override
+			public void onReceive(Frame frame) {
+				// TODO Auto-generated method stub
+				System.out.println(new String(frame.getData()));
+				System.out.println(frame.getSeq());
+			}
+		});
+		
+		for(int i = 0; i<20; i++) {
+			System.out.println(i);
 			Frame f = new Frame();
 			f.setData("Hi".getBytes());
-			f.setAck(0);
-			f.setSeq(0);
+			f.setAck(i);
+			f.setSeq(i);
 			c1.send(f);
-			c1.send(f);
-			c1.send(f);
-			c1.send(f);
-			c1.send(f);
-			c1.send(f);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 }
