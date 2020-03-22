@@ -2,7 +2,7 @@
 public class Main {
 	public static void main(String[] args) {
 		
-		//THIS IS ALL JUST ME TESTING
+		//tests
 		SenderStopWaitProtocol s = new SenderStopWaitProtocol(3000, "127.0.0.1", 5000);
 		ReceiverStopWaitProtocol r = new ReceiverStopWaitProtocol(5000, "127.0.0.1", 3000);
 		

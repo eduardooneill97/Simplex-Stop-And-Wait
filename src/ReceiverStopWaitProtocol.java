@@ -14,7 +14,7 @@ public class ReceiverStopWaitProtocol {
 					System.out.println(new String(frame.getData()));
 					send(frame.getSeq());
 				}
-				//otherwise do nothing
+				// do nothing
 			}
 		});
 	}

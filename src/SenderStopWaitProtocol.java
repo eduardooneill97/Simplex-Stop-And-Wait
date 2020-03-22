@@ -16,7 +16,7 @@ public class SenderStopWaitProtocol {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(acknowledgement == null) {
-				//for testing
+				//testing
 				System.out.println("No acknowledgement received!");
 				System.out.println("Messages in queue: " + messageQueue.size()); // +1 for frame in current
 				c.send(current);
