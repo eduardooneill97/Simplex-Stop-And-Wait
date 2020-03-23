@@ -7,6 +7,14 @@ public class Main {
 		ReceiverStopWaitProtocol r = new ReceiverStopWaitProtocol(5000, "127.0.0.1", 3000);
 		
 		s.start();
+		r.receive(new MessageCallback() {
+			
+			@Override
+			public void onReceive(String message) {
+				// TODO Auto-generated method stub
+				System.out.println("Received: "+message);
+			}
+		});
 		
 		for(int i = 0; i<20; i++) {
 			s.enqueue("Message " + i + ".");

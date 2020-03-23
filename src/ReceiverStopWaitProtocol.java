@@ -3,6 +3,7 @@ public class ReceiverStopWaitProtocol {
 	
 	private Frame acknowledgement;
 	private CommunicationLayer c;
+	private MessageCallback callback;
 	
 	public ReceiverStopWaitProtocol(int source, String destAddress, int destPort) {
 		c = new CommunicationLayer(source, destAddress, destPort);
@@ -11,12 +12,18 @@ public class ReceiverStopWaitProtocol {
 			@Override
 			public void onReceive(Frame frame) {
 				if(acknowledgement == null || frame.getSeq() != acknowledgement.getAck()) {
-					System.out.println(new String(frame.getData()));
+//					System.out.println(new String(frame.getData()));
 					send(frame.getSeq());
+					if(callback != null) 
+						callback.onReceive(new String(frame.getData()));
 				}
 				// do nothing
 			}
 		});
+	}
+	
+	public void receive(MessageCallback callback) {
+		this.callback = callback;
 	}
 	
 	private void send(int seq) {

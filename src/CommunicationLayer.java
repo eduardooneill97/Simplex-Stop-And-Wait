@@ -29,6 +29,7 @@ public class CommunicationLayer implements Serializable{
 		this.sourcePort = source;
 		this.destinationAddress = destAddress;
 		this.destinationPort = destPort;
+		this.rand = new Random();
 		sendLock = new Object();
 		try {
 			socket = new DatagramSocket(sourcePort);
@@ -45,7 +46,7 @@ public class CommunicationLayer implements Serializable{
 								//TODO ADD HERE THE UNRELIABILITY CODE
 								DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(destinationAddress), destinationPort);
 								if(rand.nextDouble() > .2) {
-									if (rand.nextDouble() > .1) {
+									if (rand.nextDouble() <= .1) {
 										socket.send(packet);
 									}
 									socket.send(packet);
@@ -75,7 +76,8 @@ public class CommunicationLayer implements Serializable{
 							DatagramPacket response = new DatagramPacket(new byte[512], 512);
 							socket.receive(response);//This is blocking until a packet is received.
 							byte[] frame = response.getData();
-							callback.onReceive(deserializeFrame(frame));
+							if(callback != null) 
+								callback.onReceive(deserializeFrame(frame));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
