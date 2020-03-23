@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 public class CommunicationLayer implements Serializable{
 	
@@ -22,7 +23,8 @@ public class CommunicationLayer implements Serializable{
 	private int sourcePort;
 	private String destinationAddress;
 	private int destinationPort;
-	
+	private Random rand;
+
 	public CommunicationLayer(int source, String destAddress, int destPort) {
 		this.sourcePort = source;
 		this.destinationAddress = destAddress;
@@ -42,9 +44,14 @@ public class CommunicationLayer implements Serializable{
 								if(buffer == null) sendLock.wait();
 								//TODO ADD HERE THE UNRELIABILITY CODE
 								DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(destinationAddress), destinationPort);
-								socket.send(packet);
+								if(rand.nextDouble() > .2) {
+									if (rand.nextDouble() > .1) {
+										socket.send(packet);
+									}
+									socket.send(packet);
+								}
+								// else { doNothing(); }
 								buffer = null;
-								
 								sendLock.notify();
 							}
 						}
