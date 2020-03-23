@@ -24,6 +24,7 @@ public class CommunicationLayer implements Serializable{
 	private String destinationAddress;
 	private int destinationPort;
 	private Random rand;
+	private boolean sendsAck = false;
 
 	public CommunicationLayer(int source, String destAddress, int destPort) {
 		this.sourcePort = source;
@@ -45,8 +46,8 @@ public class CommunicationLayer implements Serializable{
 								if(buffer == null) sendLock.wait();
 								//TODO ADD HERE THE UNRELIABILITY CODE
 								DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(destinationAddress), destinationPort);
-								if(rand.nextDouble() > .2) {
-									if (rand.nextDouble() <= .1) {
+								if(rand.nextDouble() > .2 || sendsAck) {
+									if (rand.nextDouble() <= .1 && !sendsAck) {
 										socket.send(packet);
 									}
 									socket.send(packet);
@@ -95,6 +96,10 @@ public class CommunicationLayer implements Serializable{
 	public void start() {
 		sender.start();
 		receiver.start();
+	}
+	
+	public void setSendsAck(boolean b) {
+		this.sendsAck = b;
 	}
 	
 	public void send(Frame frame) {
