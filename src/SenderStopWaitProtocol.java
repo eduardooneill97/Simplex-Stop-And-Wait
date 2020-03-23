@@ -18,7 +18,6 @@ public class SenderStopWaitProtocol {
 			if(acknowledgement == null) {
 				//testing
 				System.out.println("No acknowledgement received!");
-				System.out.println("Messages in queue: " + messageQueue.size()); // +1 for frame in current
 				c.send(current);
 				t.restart();
 				t.start();
@@ -79,6 +78,7 @@ public class SenderStopWaitProtocol {
 			current.setSeq(sequence);
 			sequence = (sequence == 0) ? 1 : 0;
 			acknowledgement = null;
+			System.out.println("Message sent!");
 			c.send(current);
 			t.start();
 		} catch (InterruptedException e) {
