@@ -13,7 +13,7 @@ public class ReceiverStopWaitProtocol {
 			@Override
 			public void onReceive(Frame frame) {
 				System.out.println("Frame received sequence: " + frame.getSeq());
-				if(acknowledgement == null || frame.getSeq() != acknowledgement.getAck()) {
+				if(acknowledgement == null || frame.getSeq() != acknowledgement.getAck() || frame.getAck() == -1) {
 //					System.out.println(new String(frame.getData()));
 					send(frame.getSeq());
 					System.out.println("receiver: acknowledgement sent!");
