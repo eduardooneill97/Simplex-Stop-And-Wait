@@ -11,6 +11,7 @@ public class SenderStopWaitProtocol {
 	private Thread sendLoop;
 	private int sequence = 0;
 	private Object lock;
+	private Boolean isFirstMessage = true;
 	private CommunicationLayer c;
 	private Timer t = new Timer(1000, new ActionListener() {
 		@Override
@@ -76,6 +77,10 @@ public class SenderStopWaitProtocol {
 		try {
 			current = messageQueue.take();
 			current.setSeq(sequence);
+			if(isFirstMessage) {
+				current.setAck(-1);
+				isFirstMessage = false;
+			}
 			sequence = (sequence == 0) ? 1 : 0;
 			acknowledgement = null;
 			c.send(current);
