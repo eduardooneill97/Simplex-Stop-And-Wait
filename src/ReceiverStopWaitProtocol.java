@@ -12,11 +12,10 @@ public class ReceiverStopWaitProtocol {
 		c.receive(new ReceiveCallback() {
 			@Override
 			public void onReceive(Frame frame) {
-				System.out.println("Frame received sequence: " + frame.getSeq());
+//				System.out.println("Frame received sequence: " + frame.getSeq());
 				if(acknowledgement == null || frame.getSeq() != acknowledgement.getAck()) {
-//					System.out.println(new String(frame.getData()));
 					send(frame.getSeq());
-					System.out.println("receiver: acknowledgement sent!");
+//					System.out.println("receiver: acknowledgement sent!");
 					if(callback != null) 
 						callback.onReceive(new String(frame.getData()));
 				}
