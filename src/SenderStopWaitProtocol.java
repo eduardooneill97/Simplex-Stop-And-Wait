@@ -18,7 +18,7 @@ public class SenderStopWaitProtocol {
 		public void actionPerformed(ActionEvent e) {
 			if(acknowledgement == null) {
 				//testing
-				System.out.println("No acknowledgement received!");
+//				System.out.println("No acknowledgement received!");
 				c.send(current);
 				t.restart();
 				t.start();
@@ -55,7 +55,7 @@ public class SenderStopWaitProtocol {
 				synchronized (lock) {
 					acknowledgement = frame;
 					//for testing purposes!
-					System.out.println("Acknowledgement of message: " + acknowledgement.getAck());
+//					System.out.println("Acknowledgement of message: " + acknowledgement.getAck());
 					t.stop();
 					lock.notify();
 				}
@@ -83,7 +83,6 @@ public class SenderStopWaitProtocol {
 			}
 			sequence = (sequence == 0) ? 1 : 0;
 			acknowledgement = null;
-			System.out.println("Message sent!");
 			c.send(current);
 			t.start();
 		} catch (InterruptedException e) {
