@@ -9,10 +9,10 @@ public class Main {
 		ReceiverStopWaitProtocol r = new ReceiverStopWaitProtocol(5000, "127.0.0.1", 3000);
 
 		System.out.println("Two Layer Communication System\n"); 
-		while(input.equals("1") || input.equals("2")){
+		while(!(input.equals("1") || input.equals("2"))){
 			System.out.println("Are you the (1) Receiver or (2) Sender?");
 			input = scanner.nextLine();
-			if(input.equals("1") || input.equals("2")){
+			if(!(input.equals("1") || input.equals("2"))){
 				System.out.println("Invalid argument. Try again.\n");
 			}
 		}
