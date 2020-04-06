@@ -58,10 +58,8 @@ public class CommunicationLayer implements Serializable{
 							}
 						}
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -71,7 +69,6 @@ public class CommunicationLayer implements Serializable{
 				
 				@Override
 				public void run() {
-					// TODO Auto-generated method stub
 					while(true) {
 						try {
 							DatagramPacket response = new DatagramPacket(new byte[512], 512);
@@ -80,7 +77,6 @@ public class CommunicationLayer implements Serializable{
 							if(callback != null) 
 								callback.onReceive(deserializeFrame(frame));
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -88,7 +84,6 @@ public class CommunicationLayer implements Serializable{
 			});
 			
 		} catch (SocketException e2) {
-			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
 	}
