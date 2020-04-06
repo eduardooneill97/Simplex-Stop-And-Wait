@@ -17,11 +17,9 @@ public class SenderStopWaitProtocol {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(acknowledgement == null) {
-				//testing
-//				System.out.println("No acknowledgement received!");
 				c.send(current);
+//				System.out.println("Resending "+ new String(current.getData())+" Seq" +current.getSeq());
 				t.restart();
-				t.start();
 			}
 		}
 	});
@@ -43,7 +41,6 @@ public class SenderStopWaitProtocol {
 						}
 					}
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -53,11 +50,11 @@ public class SenderStopWaitProtocol {
 			@Override
 			public void onReceive(Frame frame) {
 				synchronized (lock) {
-					acknowledgement = frame;
-					//for testing purposes!
-//					System.out.println("Acknowledgement of message: " + acknowledgement.getAck());
-					t.stop();
-					lock.notify();
+					if(current.getSeq() == frame.getAck()) {
+						acknowledgement = frame;
+						t.stop();
+						lock.notify();
+					}
 				}
 			}
 		});
@@ -86,7 +83,6 @@ public class SenderStopWaitProtocol {
 			c.send(current);
 			t.start();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
