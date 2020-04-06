@@ -18,12 +18,12 @@ public class Main {
 		}
 
 		if(input.equals("1")){
-			String receiver_ip = "";
+			String sender_ip = "";
 			System.out.println("*** RECEIVER TERMINAL ***\n");
-			System.out.println("(Local: 127.0.0.1) Enter Receiver IP Address:");
+			System.out.println("(Local: 127.0.0.1) Enter Sender IP Address:");
 
-			receiver_ip = scanner.nextLine();
-			r = new ReceiverStopWaitProtocol(5000, receiver_ip, 3000);
+			sender_ip = scanner.nextLine();
+			r = new ReceiverStopWaitProtocol(5000, sender_ip, 3000);
 
 			r.receive(new MessageCallback() {
 				@Override
@@ -32,12 +32,12 @@ public class Main {
 				}
 			});
 		}else{
-			String sender_ip = "";
+			String receiver_ip = "";
 			System.out.println("*** SENDER TERMINAL ***\n");
-			System.out.println("(Local: 127.0.0.1) Enter Sender IP Address:");
-			
-			sender_ip = scanner.nextLine();
-			s = new SenderStopWaitProtocol(3000, sender_ip, 5000);
+			System.out.println("(Local: 127.0.0.1) Enter Receiver IP Address:");
+
+			receiver_ip = scanner.nextLine();
+			s = new SenderStopWaitProtocol(3000, receiver_ip, 5000);
 
 			s.start();
 			while(true){
